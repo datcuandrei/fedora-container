@@ -51,7 +51,7 @@ RUN dnf update && dnf -y install @base-x \
 # personal dotfiles for i3 and picom
 COPY ./dotfiles/config /home/adminusr/.config/i3/config
 COPY ./dotfiles/picom.conf /home/adminusr/.config/picom.conf
-COPY ./dotfiles/.xinitrc /home/adminusr/.config/picom.conf
+COPY ./dotfiles/.xinitrc /home/adminusr/.xinitrc
 
 # install starship shell prompt
 RUN dnf install 'dnf-command(copr)' -y && \
