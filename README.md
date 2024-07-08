@@ -1,7 +1,7 @@
 # fedora-container
 
 bootc compatible template for myself. 
-![screenshot](ss.png)
+![screenshot](screenshot.png)
 > `fedora-bootc:40` built container running in VMware Fusion.
 ## Deployment
 First we need to start the Podman machine in rootful mode:

@@ -61,6 +61,7 @@ RUN dnf install 'dnf-command(copr)' -y && \
     echo 'eval "$(starship init bash)"' >> /home/adminusr/.bashrc
 
 RUN systemctl enable sddm
+RUN chown -R adminusr:adminusr /home/adminusr
 
 USER adminusr
 WORKDIR /home/adminusr
