@@ -29,6 +29,7 @@ COPY ./wheel-nopasswd /etc/sudoers.d
 
 WORKDIR /
 RUN dnf update && dnf -y install @base-x \
+    sddm \
     neofetch \
     i3-gaps \
     dmenu \
@@ -59,5 +60,9 @@ RUN dnf install 'dnf-command(copr)' -y && \
     dnf install starship -y && \
     echo 'eval "$(starship init bash)"' >> /home/adminusr/.bashrc
 
-    
+RUN systemctl enable sddm
+
+USER adminusr
+WORKDIR /home/adminusr
+
 CMD ["/bin/bash"]

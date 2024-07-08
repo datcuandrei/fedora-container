@@ -1,6 +1,6 @@
 # fedora-container
 
-Personal `bootc` image to deploy on my infrastructure.
+bootc compatible template for myself. 
 ![screenshot](ss.png)
 > `fedora-bootc:40` built container running in VMware Fusion.
 ## Deployment
