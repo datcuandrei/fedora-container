@@ -38,7 +38,7 @@ sudo podman run \
     --type <enter_type> \
     --rootfs ext4 \
     --local \
-    <image-id-after-build>
+    git.datcuandrei.com/datcuandrei/fedora-container:latest
 ```
 where `<enter_type>` can be:
 | Image type            | Target environment                                                                    |
