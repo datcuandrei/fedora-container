@@ -36,6 +36,7 @@ sudo podman run \
     -v /var/lib/containers/storage:/var/lib/containers/storage \
     quay.io/centos-bootc/bootc-image-builder:latest \
     --type <enter_type> \
+    --rootfs ext4 \
     --local \
     <image-id-after-build>
 ```
@@ -48,6 +49,6 @@ where `<enter_type>` can be:
 | `anaconda-iso`        | An unattended Anaconda installer that installs to the first disk found.               |
 | `raw`                 | Unformatted [raw disk](https://en.wikipedia.org/wiki/Rawdisk).         
 
-> ![TIP]
+> [!TIP]
 > To learn more about `bootc-image-builder`, [click here](https://github.com/osbuild/bootc-image-builder/blob/main/README.md).
 > Also, the default password for `root` and `adminusr` is `v3rYsTrong`.
