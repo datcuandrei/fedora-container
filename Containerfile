@@ -51,5 +51,13 @@ RUN dnf update && dnf -y install @base-x \
 # personal dotfiles for i3 and picom
 COPY ./dotfiles/config /home/adminusr/.config/i3/config
 COPY ./dotfiles/picom.conf /home/adminusr/.config/picom.conf
+COPY ./dotfiles/.xinitrc /home/adminusr/.config/picom.conf
+
+# install starship shell prompt
+RUN dnf install 'dnf-command(copr)' -y && \
+    dnf copr enable atim/starship -y && \
+    dnf install starship -y && \
+    echo 'eval "$(starship init bash)"' >> /home/adminusr/.bashrc
+
     
 CMD ["/bin/bash"]
