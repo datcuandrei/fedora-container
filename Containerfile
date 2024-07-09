@@ -19,18 +19,19 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
-
 FROM quay.io/fedora/fedora-bootc:40
 
+# during setup, we are using root.
 USER root
 
 # no password input when running sudo
 COPY ./wheel-nopasswd /etc/sudoers.d 
 
 WORKDIR /
-RUN dnf update && dnf -y install @base-x \
+RUN dnf update && dnf -y install \
+    @base-x \
     sddm \
-    neofetch \
+    fastfetch \
     i3-gaps \
     dmenu \
     picom \
@@ -41,29 +42,42 @@ RUN dnf update && dnf -y install @base-x \
     vim \
     htop \
     ed \
+    nmap\
     python3 \
+    python3-pip \
     firefox \
+    mpv \
+    git \
+    ranger \
     btop && \ 
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo && \
     echo "root:v3rYsTrong" | chpasswd && \
-    useradd -G wheel adminusr && \
-    echo "adminusr:v3rYsTrong" | chpasswd
+    useradd -G wheel adatcu && \
+    echo "adatcu:v3rYsTrong" | chpasswd
    
 # personal dotfiles for i3 and picom
-COPY ./dotfiles/config /home/adminusr/.config/i3/config
-COPY ./dotfiles/picom.conf /home/adminusr/.config/picom.conf
-COPY ./dotfiles/.xinitrc /home/adminusr/.xinitrc
+COPY ./dotfiles/config /home/adatcu/.config/i3/config
+COPY ./dotfiles/picom.conf /home/adatcu/.config/picom.conf
+COPY ./dotfiles/.xinitrc /home/adatcu/.xinitrc
 
 # install starship shell prompt
 RUN dnf install 'dnf-command(copr)' -y && \
     dnf copr enable atim/starship -y && \
     dnf install starship -y && \
-    echo 'eval "$(starship init bash)"' >> /home/adminusr/.bashrc
+    echo 'eval "$(starship init bash)"' >> /home/adatcu/.bashrc
 
-RUN systemctl enable sddm
-RUN chown -R adminusr:adminusr /home/adminusr
+# adding ssh public key to adatcu user
+RUN mkdir -p /home/adatcu/.ssh && \
+    echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEZEqzzbR9rngqD+AYtSmY5l+DAoax0/KFT6yrObEN7Y andrei@datcuandrei.com" >> /home/adatcu/.ssh/authorized_keys && \
 
-USER adminusr
-WORKDIR /home/adminusr
+# setting startup services
+RUN systemctl enable sddm && systemctl enable sshd
+
+# writing permissions
+RUN chown -R adatcu:adatcu /home/adatcu && chmod 700 /home/adatcu/.ssh && chmod 600 /home/adatcu/.ssh/authorized_keys
+
+# in container space, the user should be adatcu, not root.
+USER adatcu
+WORKDIR /home/adatcu
 
 CMD ["/bin/bash"]
