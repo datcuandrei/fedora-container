@@ -35,12 +35,18 @@ sudo podman run \
     --security-opt label=type:unconfined_t \
     -v $(pwd)/output:/output \
     -v /var/lib/containers/storage:/var/lib/containers/storage \
-    quay.io/centos-bootc/bootc-image-builder:latest \
+    quay.io/centos-bootc/bootc-image-builder:sha256-5ccc2079c6e28eb96df3a63e5babe221c8a28c5367aec8f9613cc126e729f76d  \
     --type vmdk \
     --rootfs ext4 \
     --local \
     replace-image:tag
 ```
+
+> [!WARNING]
+> Currently, the latest upstream release of `bootc-image-builder` has a problem parsing the `--local` tag. <br/>
+> To address this issue, use this [image tag](https://quay.io/repository/centos-bootc/bootc-image-builder/manifest/sha256:5ccc2079c6e28eb96df3a63e5babe221c8a28c5367aec8f9613cc126e729f76d).
+> Officially, the issue has been reported [here](https://github.com/osbuild/bootc-image-builder/issues/614).
+
 I mainly use `vmdk` for my image output for VMware Fusion, but there are different outputs to choose from: 
 | Image type            | Target environment                                                                    |
 |-----------------------|---------------------------------------------------------------------------------------|
@@ -54,7 +60,6 @@ For `rootfs`, currently only `ext4` and `xfs` are supported.
 
 > [!TIP]
 > To learn more about `bootc-image-builder`, [click here](https://github.com/osbuild/bootc-image-builder/blob/main/README.md). <br/>
-> The default password for `root` and `adminusr` is `v3rYsTrong`. <br/>
 > Make sure to create an `output` folder before building an image.
 
 ## LICENSE
